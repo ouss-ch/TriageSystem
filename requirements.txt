@@ -1,0 +1,24 @@
+# --- Web framework ---
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+
+# --- DB ---
+sqlalchemy
+asyncpg
+alembic
+
+# --- Task queue ---
+celery
+kombu
+
+# --- Email ingestion ---
+imap-tools
+
+# --- LLM ---
+anthropic
+
+# --- Utils ---
+python-dotenv
+httpx
