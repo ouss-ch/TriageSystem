@@ -11,6 +11,7 @@ services:
     depends_on:
       - postgres
       - rabbitmq
+      - llm
     volumes:
       - ./app:/app/app
 
@@ -22,6 +23,7 @@ services:
     depends_on:
       - postgres
       - rabbitmq
+      - llm
     volumes:
       - ./app:/app/app
 
@@ -54,6 +56,30 @@ services:
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
 
+  llm:
+    # OpenAI-compatible inference server serving a lightweight local model.
+    # TODO: pin version tag; requires NVIDIA GPU + nvidia-container-toolkit on host.
+    image: vllm/vllm-openai:latest
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+      - HF_HUB_DISABLE_XET=1
+    command:
+      - "--model=${LLM_MODEL}"
+      - "--max-model-len=4096"
+      - "--gpu-memory-utilization=0.75"
+    ports:
+      - "8001:8000"
+    volumes:
+      - hf-cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
 volumes:
   postgres-data:
   rabbitmq-data:
+  hf-cache:

@@ -20,9 +20,9 @@ class Settings(BaseSettings):
     EMAIL_PASSWORD: str = ""
     EMAIL_MAILBOX: str = "INBOX"
 
-    LLM_PROVIDER: str = "anthropic"
-    LLM_API_KEY: str = ""
-    LLM_MODEL: str = "claude-sonnet-5"
+    LLM_BASE_URL: str = "http://llm:8000/v1"
+    LLM_API_KEY: str = "not-needed"
+    LLM_MODEL: str = "Qwen/Qwen2.5-0.5B-Instruct"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

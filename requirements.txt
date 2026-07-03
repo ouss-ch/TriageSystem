@@ -8,6 +8,7 @@ pydantic-settings
 sqlalchemy
 asyncpg
 alembic
+psycopg2
 
 # --- Task queue ---
 celery
@@ -16,8 +17,8 @@ kombu
 # --- Email ingestion ---
 imap-tools
 
-# --- LLM ---
-anthropic
+# --- LLM (openai client, pointed at local vLLM server) ---
+openai
 
 # --- Utils ---
 python-dotenv
