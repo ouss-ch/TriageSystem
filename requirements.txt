@@ -3,6 +3,7 @@ fastapi
 uvicorn[standard]
 pydantic
 pydantic-settings
+email-validator
 
 # --- DB ---
 sqlalchemy
@@ -20,6 +21,12 @@ imap-tools
 # --- LLM (openai client, pointed at local vLLM server) ---
 openai
 
+# --- Auth ---
+bcrypt
+pyjwt
+python-multipart
+
 # --- Utils ---
 python-dotenv
 httpx
+cryptography
