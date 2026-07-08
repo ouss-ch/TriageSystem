@@ -30,3 +30,6 @@ python-multipart
 python-dotenv
 httpx
 cryptography
+
+# --- LLM ---
+openai
