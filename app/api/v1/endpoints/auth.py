@@ -24,6 +24,7 @@ async def register(payload: UserRegisterRequest, db: AsyncSession = Depends(get_
     if existing:
         raise HTTPException(status_code=409, detail="email already registered")
 
+    # Bootstrap first user as admin, all others are members
     user_count = await db.scalar(select(func.count()).select_from(User))
     role = UserRole.admin if user_count == 0 else UserRole.member
 
