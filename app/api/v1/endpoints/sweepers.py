@@ -22,6 +22,7 @@ from app.schemas.mailbox import (
     SweeperRemoveResponse,
 )
 from app.services.mailbox_auth import verify_imap_credentials
+from app.tasks.email_tasks import fetch_emails_task
 
 router = APIRouter(dependencies=[Depends(require_admin)])
 
@@ -42,6 +43,8 @@ async def add_email(payload: SweeperCreateRequest, db: AsyncSession = Depends(ge
     )
     db.add(sweeper)
     await db.commit()
+
+    fetch_emails_task.delay(sweeper.id)
 
     return SweeperCreateResponse(success=True, message="email added successfully", email=payload.email)
 

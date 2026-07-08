@@ -3,6 +3,9 @@
 from celery import Celery
 
 from app.core.config import settings
+from app.core.logging import setup_logging
+
+setup_logging()
 
 celery_app = Celery(
     "triage_system",
@@ -14,4 +17,14 @@ celery_app = Celery(
     ],
 )
 
-# TODO: task routing, retry policy, beat schedule
+# Periodic fan-out: re-sweeps every registered mailbox every SWEEP_INTERVAL_SECONDS.
+# Newly added mailboxes also get an immediate one-off sweep — see
+# app/api/v1/endpoints/sweepers.py add_email.
+celery_app.conf.beat_schedule = {
+    "dispatch-mailbox-sweeps": {
+        "task": "tasks.dispatch_sweeps",
+        "schedule": settings.SWEEP_INTERVAL_SECONDS,
+    },
+}
+
+# TODO: task routing, retry policy

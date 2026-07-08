@@ -16,6 +16,10 @@ class Settings(BaseSettings):
 
     EMAIL_MAILBOX: str = "INBOX"
 
+    # Drives both the beat schedule (how often each mailbox is re-swept) and the
+    # sweep's own lookback window (2x this, so no message is missed between ticks).
+    SWEEP_INTERVAL_SECONDS: int = 60
+
     # Fernet key used to encrypt/decrypt mailbox passwords stored via /sweepers.
     ENCRYPTION_KEY: str
 
