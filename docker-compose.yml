@@ -67,6 +67,7 @@ services:
       - "--model=${LLM_MODEL}"
       - "--max-model-len=4096"
       - "--gpu-memory-utilization=0.75"
+      - "--api-key=${LLM_API_KEY}"
     ports:
       - "8001:8000"
     volumes:
